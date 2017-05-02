@@ -1,0 +1,67 @@
+ArduVidRx
+
+Serial-Terminal Commands
+
+  T [freq]    : Tune receiver to given MHz or XX code
+  A           : Auto-scan and tune to highest-RSSI channel
+  N [minRSSI] : Auto-scan and tune to next channel
+  P [minRSSI] : Auto-scan and tune to previous channel
+  M [seconds] : Auto-scan and monitor channels
+  S [minRSSI] : Scan and report channels with highest RSSI
+  F [minRSSI] : Scan and report RSSI for full set of channels
+  L [list]    : List of freqs of interest (LH for help)
+  R           : Read RSSI for current channel (RL for 'L' freqs)
+  O           : Continuous RSSI display (OL for 'L' freqs)
+  U / D       : Change tuned frequency up/down by one MHz
+  B / C       : Increment band/channel on tuned-frequency code
+  X           : Extra commands (XH for help)
+  =           : Set or show button mode value
+  V           : Show program-version information
+  I           : Show frequency-table information
+  H or ?      : Show help information
+
+Extra commands:
+  XJ [min,max]  : Set or show RSSI-scaling values
+  XJ default    : Set RSSI-scaling values to defaults
+  XA [0|1|R]    : Disable/enable/restart auto RSSI calib
+  XT [timeMs]   : Set or show RX5808 min-tune time in ms ("XT default" will set default value)
+  XM [minRSSI]  : Set or show minimum RSSI for scans
+  XI [seconds]  : Set or show monitor-mode interval
+  XU [text]     : Set or show Unit-ID string
+  XR or ~       : Read and show RSSI (with channel info)
+  XB / XC       : Decrement band/channel on tuned-freq code
+  XP            : Show all frequency-list presets
+  XL [name]     : Show frequency list for preset name
+  XZ [defaults] : Perform soft program reboot ("XZ defaults" will set config to default values)
+  X, XH or X?   : Show extra help information
+
+Frequency-list command:
+  L [list]    : Set list of freq (MHz) values of interest
+  L           : Show list of freq (MHz) values of interest
+  L 0         : Clear list of freq values of interest
+  L +values   : Add values to current list
+  L -values   : Remove values from current list
+  L S         : Load list of freqs via RSSI scan
+  L H         : Show help information for 'L' command
+     When a list is entered, the frequencies in the list will be the only ones scanned and selected by the 'A', 'S', 'N', 'P' and 'M' commands.  The 'RL' and 'OL' commands will scan and display RSSI values for the frequencies in the list.  Entering 'L 0' will clear the list.  The '+' and '-' operators may be used to add and remove frequencies, and may be mixed together (i.e., 'L +5740 -5905').
+     The 'L S' command will load the list with the frequency set returned by the last scan ('S' command), or will perform a scan and load the detected values.
+     Frequency-list-preset names may also be used as parameters to the 'L' command (i.e., 'L IMD5').  Available presets may be displayed via the 'XP' command.
+
+Automatic RSSI Calibration
+     By default, the acquired raw-RSSI values are automatically calibrated so the reported RSSI values are in the range 0 (no signal) to 100 (maximum-strength signal).  Once the receiver has been tuned for the first time to a strong signal, the calibration should be in place.  The calibration-scaling values may be viewed via the 'XJ' command.  Fixed calibration values may be set manually by disabling the automatic calibration ("XA 0") and entering min/max values using the 'XJ' command.  Entering the command "XA R" will reset the calibration-scaling values (same as "XJ defaults"), restart the automatic calibration, and display calibration-status messages during the rest of session.  (The "XA S" command will also enable the display of calibration-status messages.)
+
+Debug/Test Commands:
+  G           : Show raw debug inputs values
+  E [0|1|txt] : Serial echo on|off or echo text (to slave receiver)
+  XD [chars]  : Show given chars on display
+  XX [list]   : Show index values for frequencies (devel)
+  XK          : Show frequency table values (devel)
+
+
+Keyboard Shortcuts:
+
+  Cursor Up/Down    : Change tuned frequency up/down by one MHz
+  Cursor Right/Left : Auto-scan and tune to next/previous channel
+  Home              : Scan and report channels with highest RSSI
+  End               : Auto-scan and monitor channels
+  <Enter>           : Repeat last command (if R, N, P, B, C or G)

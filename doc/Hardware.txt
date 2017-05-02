@@ -1,0 +1,107 @@
+ArduVidRx
+
+Hardware
+
+The Arduino Pro Mini 328 (5V 16MHz) is used as the new controller for the receiver.
+
+Arduino Pro Mini 328 - 5V/16MHz
+https://www.sparkfun.com/products/11113
+https://www.arduino.cc/en/Main/ArduinoBoardProMini
+http://www.ebay.com/itm/171970464859
+
+An FTDI-compatible adapter (5-volt version) is used to upload firmware and communicate with the ArduVidRx.
+
+FTDI Programmer CP2102 USB adapter FTDI Programming Controller
+http://multirotormania.com/programmers/315-ftdi-programmer.html
+http://www.readytoflyquads.com/cp2102-usb-adapter
+http://www.ebay.com/itm/320907184616
+
+One connection option is to use an ethernet-style cable to get wires out of the case (via drilled hole), leading to a 6-pin header (for FTDI), or to a standard ethernet connector for extended-length wiring.  Another option could be to put a 6-pin right-angle connector on the Arduino and cut an opening in the case for access.  A bluetooth module (HC-06) could also be connected.
+
+Below is a wiring map.  Also see the "ArduVidRx_wiring.pdf" file.  In the software, pin assignments are configured in the "config.h" file.
+
+For the receiver to be serial addressable (able to send/receive data), the minimum wiring are the connections to the RX5808 module, and +5V/GND/FTDI on the Arduino board.  The other connections are useful but optional.
+
+Removing the original controller chip (U8) is recommended.  If it is not removed, the Ardunio can still control the module if the traces leading to the CH1, CH2 and CH3 pins are cut.  (In this case the 7-segment displays will show "random" digits in response to button presses.)
+
+If the original controller chip (U8) is removed but the 7-segment displays are not wired to the Ardunio, one of the decimal-points on the display can used as a status indicator by wiring R12 to D13 on the Arduino (like in the wiring diagram) and connecting R21 (left side) to ground.
+
+Output signals may (optionally) be connected to one of the A/V jacks.  (One output for analog-RSSI out, and one for future expansion.)  These can take over the audio outputs on that jack, while still leaving the extra video output available.  If connected then the original traces to the connector (middle contacts) need to be cut.
+
+
+----------------------------------------------------------------------------
+
+
+Wiring Map:
+
+
+D0 -> TXO (serial port)
+D1 <- RXI (serial port)
+
+D2 <- CH / Up
+D3 <- FR / Down
+D4 -> RSSI_vout (PWM)
+D5 -> addressable LED-strip (maybe in future)
+
+D6 -> display segment A
+D7 -> display segment B
+D8 -> display segment C
+D9 -> display segment D
+
+D10 -> RX5808 CH1 SPI_DATA
+D11 -> RX5808 CH2 SPI_SEL
+D12 -> RX5808 CH3 SPI_CLK
+
+D13 -> display segment DP (also Arduino status LED)
+
+A7 <- RX5808 RSSI
+
+A0 -> display segment E
+A1 -> display segment F
+A2 -> display segment G
+A3 -> display select 0 (left)
+A4 -> display select 1 (right)
+
+
+ R9   A  D6
+ R8   B  D7
+ R6   F  A1
+ R5   E  A0
+R12  dp  D13
+R11   G  A2
+R10   C  D8
+ R7   D  D9
+
+L Digit:  R25  A3  (connect to top side of resistor)
+R Digit:  R21  A4  (connect to left side of resistor)
+
+
+If connecting ethernet-style cable to Arduino FTDI contacts:
+
+GND  BRN & BLU
+VCC  GRN
+RXI  BRN-WHI
+TXO  BLU-WHI
+GRN  GRN-WHI
+
+12V  ORG & ORG-WHI
+
+Use T568B:
+----------
+1  ORG-WHI
+2  ORG
+3  GRN-WHI
+4  BLU
+5  BLU-WHI
+6  GRN
+7  BRN-WHI
+8  BRN
+
+
+----------------------------------------------------------------------------
+
+
+RSSI_vout PWM:
+  RC on output:  4.7k / 10uF
+  http://provideyourown.com/2011/analogwrite-convert-pwm-to-voltage
+  http://sim.okawa-denshi.jp/en/PWMtool.php

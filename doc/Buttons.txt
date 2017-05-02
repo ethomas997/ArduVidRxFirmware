@@ -1,0 +1,39 @@
+ArduVidRx
+
+Buttons Functions and Modes
+
+ArduVidRx supports two buttons, referred to as "Up" (labeled "CH" on the RC832) and "Down" (labeled "FR" on the RC832).  The buttons may also be pressed together, referred to as "both."  There are three button-function modes, described below.
+
+Live RSSI display:  In all of the button modes, holding both buttons for longer than one second (a "long press") and then releasing them will activate the live-RSSI-display function, where a live reading of the signal strength for the current channel is shown on the 7-segment displays (00-99).  Pressing either button will exit the function.  This function may also be toggled using the "#" command via the serial-terminal interface.
+
+Button-mode setting:  In all of the button modes, holding both buttons for longer than two seconds (an "extra-long press") will enter the button-mode-selection function.  The current button-mode value is shown on the display (as "=1", "=2" or "=3"), and, if the buttons continue to be held, the button-mode values are cycled through.  The mode value shown when the buttons are released will select the button mode.  The button mode may also be queried and set using the "=" command via the serial-terminal interface.
+
+Note:  The long-press and extra-long-press functions are only enabled on hardware that has the 7-segment displays connected (and enabled in the source code).
+
+Button Mode 1:  Increment frequency band/channel codes
+
+In this mode the basic function of the buttons is like the original RC832 functionality.  Pressing the "Up" ("CH") button will change the channel part of the 2-character frequency code, pressing the "Down" button ("FR") will change the band part.  (See freqency table below.)  A press of both buttons will perform an auto-scan in which all channels are scanned and the one with the strongest signal is tuned in.  The button presses in this mode correspond to the serial-terminal commands "C" (Up), "B" (Down) and "A" (both).
+
+Button Mode 2:  Scan and step through active channels
+
+When the "Up" or "Down" button is pressed in this mode an initial scan of channels will be performed and the channel with the strongest signal (if strong enough) will be tuned in.  (If no channels with strong-enough signals are detected then "nc" will be displayed and the tuned channel will be unchanged.)  On subsequent presses, other channels (on which strong-enough signals are detected) will be selected, in a round-robin fashion.  After a button press the channels will be rescanned if no more than one strong-enough channel was found, the next-selected channel does not have a strong-enough signal, or more than two minutes have elapsed since the last scan.
+
+A press of both buttons will activate the "monitor" function, in which the scanning and channel-changing actions are performed automatically every few seconds.  Pressing either button will exit the function.  The button presses in this mode correspond to the serial-terminal commands "N" (Up), "P" (Down) and "M" (both).
+
+Button Mode 3:  Increment/decrement freq in MHz
+
+Button presses in this mode will increment or decrement the currently-tuned channel by one MHz.  Holding a button will perform a repeating-presses action.  A press of both buttons will perform an auto-scan in which all channels are scanned and the one with the strongest signal is tuned in.  The button presses in this mode correspond to the serial-terminal commands "U" (Up), "D" (Down) and "A" (both).
+
+Default Button Modes:  On hardware that has the 7-segment displays connected (and enabled in the source code), the default button mode is 1.  On hardware without the 7-segment displays the default button mode is 2 (as this mode is less dependent on display feedback to the operator).
+
+
+----------------------------------------------------------------------------
+
+
+Frequency Table     1      2      3      4      5      6      7      8
+Frequency band A   5865   5845   5825   5805   5785   5765   5745   5725
+Frequency band B   5733   5752   5771   5790   5809   5828   5847   5866
+Frequency band E   5705   5685   5665   5645   5885   5905   5925   5945
+Frequency band F   5740   5760   5780   5800   5820   5840   5860   5880
+Frequency band R   5658   5695   5732   5769   5806   5843   5880   5917
+Frequency band L   5362   5399   5436   5473   5510   5547   5584   5621
