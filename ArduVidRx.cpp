@@ -17,6 +17,8 @@
 //                     added XT command (with default of 35 ms).
 //  4/29/2017 -- [ET]  Version 1.71:  Added NODISP_PRIVSEL_PIN and
 //                     and NODISP_SECVSEL_PIN options.
+//  5/11/2017 -- [ET]  Version 1.8:  Modified so response of 'L' query
+//                     with empty list and serial-echo off is "0".
 //
 
 //Global arrays:
@@ -44,7 +46,7 @@
 #include "FreqListPresets.h"
 
 #define PROG_NAME_STR "ArduVidRx"
-#define PROG_VERSION_STR "1.71"
+#define PROG_VERSION_STR "1.8"
 #define LISTFREQMHZ_ARR_SIZE 80   //size for 'listFreqsMHzArr[]' array
 
 #define EEPROM_ADRW_FREQ 0        //address for freq value in EEPROM (word)
@@ -930,13 +932,19 @@ void processFreqsMHzList(const char *listStr)
         {  //this is the first entry
           Serial.print(F(" Error processing input:  "));
           Serial.print(&listStr[sPos]);
-          Serial.println(F("  [Enter LH for help]"));
+          if(serialEchoFlag)
+            Serial.print(F("  [Enter LH for help]"));
+          Serial.println();
           return;       //don't show list contents below
         }
            //not first entry
         Serial.print(F(" Error processing value(s):  "));
         Serial.print(&listStr[sPos]);
-        Serial.println(F("  [Enter LH for help]"));
+        if(serialEchoFlag)
+          Serial.print(F("  [Enter LH for help]"));
+        Serial.println();
+        if(!serialEchoFlag)  //if serial echo off then
+          return;            //don't follow error msg with numItems display
         break;
       }
       sPos = ePos;
@@ -969,14 +977,19 @@ void processFreqsMHzList(const char *listStr)
 // 'scanFreqsMHzArr[]' array.
 void showFreqsMHzList()
 {
+  Serial.print(' ');    //start with leading space (so ignored by slave recvr)
   if(listFreqsMHzArrCount > 0)
   {
-    Serial.print(' ');  //start with leading space (so ignored by slave recvr)
     showUint16ArrayList(listFreqsMHzArr,listFreqsMHzArrCount);
     Serial.println();
   }
-  else if(serialEchoFlag)
-    Serial.println(F(" List is empty"));
+  else
+  {
+    if(serialEchoFlag)
+      Serial.println(F("List is empty"));
+    else
+      Serial.println('0');
+  }
 }
 
 //Processes the show-RSSI command.  May have 'L' parameter to show
