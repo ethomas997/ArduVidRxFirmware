@@ -9,8 +9,8 @@
 #include "Rx5808Fns.h"
 
     //list of names for presets:
-const char freqListNamesPArray[] PROGMEM = "A,B,E,F,R,L,IMD5,IMD6,"
-           "ET5,ET5A,ET5B,ET5C,ETBest6,ET6minus1,ETFEAL6,ETFEAL7,ETFEAL8\0";
+const char freqListNamesPArray[] PROGMEM = "A,B,E,F,R,L,IMD6C,IMD6CL1,"
+           "IMD5,IMD6,ET5,ET5A,ETBest6,ET6minus1\0";
 
     //frequency-index values for presets
     // (used 'processListTranslateInfoCmd()' to generate values):
@@ -20,22 +20,19 @@ const byte arr02[] PROGMEM = { 16, 17, 18, 19, 20, 21, 22, 23, 255 }; //E
 const byte arr03[] PROGMEM = { 24, 25, 26, 27, 28, 29, 30, 31, 255 }; //F
 const byte arr04[] PROGMEM = { 32, 33, 34, 35, 36, 37, 38, 39, 255 }; //R
 const byte arr05[] PROGMEM = { 40, 41, 42, 43, 44, 45, 46, 47, 255 }; //L
-const byte arr06[] PROGMEM = { 17, 25, 27, 30, 21, 255 };             //IMD5
-const byte arr07[] PROGMEM = { 19, 17, 25, 27, 30, 21, 255 };         //IMD6
-const byte arr08[] PROGMEM = { 18, 7, 28, 30, 23, 255 };              //ET5
-const byte arr09[] PROGMEM = { 18, 9, 27, 15, 21, 255 };              //ET5A
-const byte arr10[] PROGMEM = { 18, 9, 27, 0, 21, 255 };               //ET5B
-const byte arr11[] PROGMEM = { 18, 25, 27, 0, 21, 255 };              //ET5C
+const byte arr06[] PROGMEM = { 32, 33, 25, 27, 31, 39, 255 };         //IMD6C
+const byte arr07[] PROGMEM = { 40, 32, 33, 25, 27, 31, 39, 255 };     //IMD6CL1
+const byte arr08[] PROGMEM = { 17, 25, 27, 30, 21, 255 };             //IMD5
+const byte arr09[] PROGMEM = { 19, 17, 25, 27, 30, 21, 255 };         //IMD6
+const byte arr10[] PROGMEM = { 18, 7, 28, 30, 23, 255 };              //ET5
+const byte arr11[] PROGMEM = { 18, 9, 27, 15, 21, 255 };              //ET5A
 const byte arr12[] PROGMEM = { 19, 17, 25, 3, 21, 23, 255 };          //ETBest6
 const byte arr13[] PROGMEM = { 19, 17, 25, 21, 23, 255 };             //ET6minus1
-const byte arr14[] PROGMEM = { 40, 44, 17, 25, 21, 23, 255 };         //ETFEAL6
-const byte arr15[] PROGMEM = { 40, 44, 17, 25, 3, 21, 23, 255 };      //ETFEAL7
-const byte arr16[] PROGMEM = { 40, 44, 19, 17, 25, 3, 21, 23, 255 };  //ETFEAL8
 
     //array of pointers to index-values arrays:
-const byte* const freqListValuesPArray[] PROGMEM = { arr00, arr01, arr02,
-       arr03, arr04, arr05, arr06, arr07, arr08, arr09, arr10, arr11, arr12,
-                                               arr13, arr14, arr15, arr16 };
+const byte* const freqListValuesPArray[] PROGMEM = {
+       arr00, arr01, arr02, arr03, arr04, arr05, arr06,
+       arr07, arr08, arr09, arr10, arr11, arr12, arr13 };
 
 
 //Returns array index for given preset name, or -1 if no match.

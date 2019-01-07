@@ -19,6 +19,7 @@
 //                     and NODISP_SECVSEL_PIN options.
 //  5/11/2017 -- [ET]  Version 1.8:  Modified so response of 'L' query
 //                     with empty list and serial-echo off is "0".
+//   1/4/2019 -- [ET]  Version 1.81:  Added IMD6C to frequency-list presets.
 //
 
 //Global arrays:
@@ -46,7 +47,7 @@
 #include "FreqListPresets.h"
 
 #define PROG_NAME_STR "ArduVidRx"
-#define PROG_VERSION_STR "1.8"
+#define PROG_VERSION_STR "1.81"
 #define LISTFREQMHZ_ARR_SIZE 80   //size for 'listFreqsMHzArr[]' array
 
 #define EEPROM_ADRW_FREQ 0        //address for freq value in EEPROM (word)
